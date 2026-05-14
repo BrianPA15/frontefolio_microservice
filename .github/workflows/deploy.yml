@@ -91,19 +91,33 @@ jobs:
             grep -o '^[^=]*' /opt/frontefolio/.env | grep -v '^$'
             echo "--- Valores no sensibles ---"
             grep -E '^(PORT|NODE_ENV|DB_HOST|DB_PORT|DB_NAME|.*_SERVICE_URL)=' /opt/frontefolio/.env
-
       - name: Run migrations and seed
         uses: appleboy/ssh-action@v1
         with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USER }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          command_timeout: 5m
-          script: |
-            cd /opt/frontefolio
-            npm install --quiet
-            node db/migrate.js
-            node db/seed.js
+            host: ${{ secrets.VPS_HOST }}
+            username: ${{ secrets.VPS_USER }}
+            key: ${{ secrets.VPS_SSH_KEY }}
+              command_timeout: 5m
+            script: |
+              cd /opt/frontefolio
+              # Instalamos dotenv por si no está en el proyecto
+              npm install dotenv --quiet
+              
+              # Ejecutamos las migraciones leyendo el .env (¡Sin hacer CP!)
+              node -r dotenv/config db/migrate.js
+              node -r dotenv/config db/seed.js
+      # - name: Run migrations and seed
+      #   uses: appleboy/ssh-action@v1
+      #   with:
+      #     host: ${{ secrets.VPS_HOST }}
+      #     username: ${{ secrets.VPS_USER }}
+      #     key: ${{ secrets.VPS_SSH_KEY }}
+      #     command_timeout: 5m
+      #     script: |
+      #       cd /opt/frontefolio
+      #       npm install --quiet
+      #       node db/migrate.js
+      #       node db/seed.js
 
       - name: Build and restart containers
         uses: appleboy/ssh-action@v1
