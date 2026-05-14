@@ -94,18 +94,18 @@ jobs:
       - name: Run migrations and seed
         uses: appleboy/ssh-action@v1
         with:
-            host: ${{ secrets.VPS_HOST }}
-            username: ${{ secrets.VPS_USER }}
-            key: ${{ secrets.VPS_SSH_KEY }}
-              command_timeout: 5m
-            script: |
-              cd /opt/frontefolio
-              # Instalamos dotenv por si no está en el proyecto
-              npm install dotenv --quiet
-              
-              # Ejecutamos las migraciones leyendo el .env (¡Sin hacer CP!)
-              node -r dotenv/config db/migrate.js
-              node -r dotenv/config db/seed.js
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USER }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          command_timeout: 5m
+          script: |
+            cd /opt/frontefolio
+            # Instalamos dotenv por si no está en el proyecto
+            npm install dotenv --quiet
+            
+            # Ejecutamos las migraciones leyendo el .env (¡Sin hacer CP!)
+            node -r dotenv/config db/migrate.js
+            node -r dotenv/config db/seed.js
       # - name: Run migrations and seed
       #   uses: appleboy/ssh-action@v1
       #   with:
