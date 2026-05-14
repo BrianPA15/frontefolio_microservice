@@ -9,7 +9,7 @@ jobs:
   deploy:
     name: Deploy to VPS
     runs-on: ubuntu-latest
-    environment: ec2
+    environment: EC2
 
     steps:
       - uses: actions/checkout@v4
