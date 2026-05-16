@@ -1,6 +1,6 @@
 # Frontefolio API — Arquitectura de Microservicios
 
-API REST para la plataforma Frontefolio — importación de productos de más de 50 países a España. Prueba Integracion
+API REST para la plataforma Frontefolio — importación de productos de más de 50 países a España. Prueba Integracion 2
 
 ## Arquitectura
 
